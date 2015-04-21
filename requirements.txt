@@ -11,3 +11,4 @@ git+ssh://git@github.com/brandicted/nefertari-mongodb.git
 git+ssh://git@github.com/brandicted/nefertari-sqla.git
 
 -e .
+-e ../ramses
