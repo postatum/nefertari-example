@@ -40,6 +40,13 @@ protocols: [HTTP, HTTPS]
               "rating": {
                 "required": true,
                 "type": "integer"
+              },
+              "products": {
+                "required": false,
+                "type": "list",
+                "args": {
+                  "item_type": "string"
+                }
               }
             }
           }
