@@ -63,7 +63,8 @@ class User(AuthModelDefaultMixin, BaseDocument):
     # when switching engine.
     stories = eng.Relationship(
         document='Story', ondelete='NULLIFY',
-        backref_name='owner', backref_ondelete='NULLIFY')
+        backref_name='owner', backref_ondelete='NULLIFY',
+        backref_lazy='joined')
     profile = eng.Relationship(
         document='Profile', backref_name='user', uselist=False)
 
