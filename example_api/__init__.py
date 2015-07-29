@@ -1,7 +1,6 @@
 from pkg_resources import get_distribution
 import logging
 
-from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.config import Configurator
 
@@ -51,7 +50,7 @@ def bootstrap(config):
 
     if Settings.asbool('auth', False):
         config.add_request_method(
-            'example_api.models.User.get_authuser_by_userid',
+            'example_api.models.User.get_authuser_by_name',
             'user', reify=True)
     else:
         log.warning('*** USER AUTHENTICATION IS DISABLED ! ***')
@@ -85,15 +84,13 @@ def main(global_config, **settings):
     )
 
     config.include('nefertari.engine')
-
     from example_api.models import Profile
     from example_api.models import User
-    authn_policy = AuthTktAuthenticationPolicy(
-        Settings['auth_tkt_secret'],
-        callback=User.get_groups_by_userid,
-        hashalg='sha512',
-        cookie_name='example_api_auth_tkt',
-        http_only=True,
+    from nefertari.authentication.policies import ApiKeyAuthenticationPolicy
+    authn_policy = ApiKeyAuthenticationPolicy(
+        user_model=User,
+        check=User.get_groups_by_token,
+        credentials_callback=User.get_token_credentials,
     )
     config.set_authentication_policy(authn_policy)
 
@@ -119,14 +116,14 @@ def includeme(config):
     config.scan(package='example_api.views')
 
     root = config.get_root_resource()
-    root.add('account',
-             view='example_api.views.account.TicketAuthRegisterView',
+    root.add('register',
+             view='example_api.views.account.TokenAuthRegisterView',
              factory='nefertari.acl.AuthenticationACL')
-    root.add('login',
-             view='example_api.views.account.TicketAuthLoginView',
+    root.add('token',
+             view='example_api.views.account.TokenAuthClaimView',
              factory='nefertari.acl.AuthenticationACL')
-    root.add('logout',
-             view='example_api.views.account.TicketAuthLogoutView',
+    root.add('reset_token',
+             view='example_api.views.account.TokenAuthResetView',
              factory='nefertari.acl.AuthenticationACL')
 
     create_resources(config)

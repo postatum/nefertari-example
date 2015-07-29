@@ -1,7 +1,7 @@
 from nefertari.authentication.views import (
-    TicketAuthRegisterView as NefTicketAuthRegisterView,
-    TicketAuthLoginView as NefTicketAuthLoginView,
-    TicketAuthLogoutView as NefTicketAuthLogoutView,
+    TokenAuthRegisterView as NefTokenAuthRegisterView,
+    TokenAuthClaimView as NefTokenAuthClaimView,
+    TokenAuthResetView as NefTokenAuthResetView,
 )
 
 from example_api.models import User
@@ -16,13 +16,13 @@ from example_api.models import User
 """
 
 
-class TicketAuthRegisterView(NefTicketAuthRegisterView):
+class TokenAuthRegisterView(NefTokenAuthRegisterView):
     Model = User
 
 
-class TicketAuthLoginView(NefTicketAuthLoginView):
+class TokenAuthClaimView(NefTokenAuthClaimView):
     Model = User
 
 
-class TicketAuthLogoutView(NefTicketAuthLogoutView):
+class TokenAuthResetView(NefTokenAuthResetView):
     Model = User
