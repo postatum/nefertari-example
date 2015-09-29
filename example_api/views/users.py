@@ -16,7 +16,7 @@ class UsersView(BaseView):
             self._query_params['groups'] = 'user'
         elif self._query_params['groups'] == '_all':
             self._query_params.pop('groups')
-        return self.Model.get_collection(**self._query_params)
+        return self.get_collection()
 
     def show(self, **kwargs):
         return self.context
