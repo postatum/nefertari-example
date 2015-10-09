@@ -27,7 +27,7 @@ def bootstrap(config):
     root = config.get_root_resource()
 
     config.include('example_api.models')
-    config.include('nefertari.view')
+    # config.include('nefertari.view')
     config.include('nefertari.json_httpexceptions')
 
     enable_selfalias(config, 'user_username')

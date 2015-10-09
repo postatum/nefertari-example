@@ -17,7 +17,7 @@ class Profile(BaseDocument):
 
 
 class User(BaseDocument):
-    _nested_relationships = ['profile']
+    _nested_relationships = ['profile', 'stories']
     _auth_fields = ['username', 'first_name', 'last_name', 'stories']
     _public_fields = ['username']
     _hidden_fields = ['password']
@@ -29,5 +29,5 @@ class User(BaseDocument):
     first_name = eng.StringField()
     last_name = eng.StringField()
     last_login = eng.DateTimeField()
-    stories = eng.Relationship('Story')
+    stories = eng.Relationship('Story', backref_name='owner')
     profile = eng.Relationship('Profile', uselist=False)
