@@ -26,7 +26,7 @@ class UsersView(BaseView):
     def update(self, **kwargs):
         item = self.Model.get_item(
             username=kwargs.pop('user_username'), **kwargs)
-        return item.update(self._json_params, self.request)
+        return item.update(self._json_params, request=self.request)
 
     def replace(self, **kwargs):
         return self.update(**kwargs)

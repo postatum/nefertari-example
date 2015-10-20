@@ -25,7 +25,7 @@ class StoriesView(BaseView):
     def update(self, **kwargs):
         item = self.Model.get_item(
             id=kwargs.pop('story_id'), **kwargs)
-        return item.update(self._json_params, self.request)
+        return item.update(self._json_params, request=self.request)
 
     def replace(self, **kwargs):
         return self.update(**kwargs)
