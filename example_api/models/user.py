@@ -30,4 +30,4 @@ class User(BaseDocument):
     last_name = eng.StringField()
     last_login = eng.DateTimeField()
     stories = eng.Relationship('Story', backref_name='owner')
-    profile = eng.Relationship('Profile', uselist=False)
+    profile = eng.Relationship('Profile', backref_name='user', uselist=False)
