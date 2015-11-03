@@ -27,6 +27,7 @@ def bootstrap(config):
     Settings[nefertari.APP_NAME+'.__version__'] = nefertari.__version__
 
     config.include('nefertari')
+    config.scan('example_api')
 
     root = config.get_root_resource()
     root.default_factory = 'nefertari.acl.RootACL'
@@ -192,3 +193,24 @@ def initialize():
 
     except KeyError as e:
         log.error('Failed to create system user. Missing config: %s' % e)
+
+
+
+# Serve loader.io verification file
+
+import os
+from pyramid.response import Response
+from pyramid.view import view_config
+
+VERIFICATION_FILE = 'loaderio-ab4b2ee8ceda72d10240d5d96860b921.txt'
+
+_here = os.path.dirname(__file__)
+_verification = open(os.path.join(_here, VERIFICATION_FILE)).read()
+_verification_response = Response(
+    content_type='text/plain',
+    body=_verification)
+
+
+@view_config(name=VERIFICATION_FILE)
+def verification_view(context, request):
+    return _verification_response
