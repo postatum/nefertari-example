@@ -32,7 +32,7 @@ def bootstrap(config):
     root.default_factory = 'nefertari.acl.RootACL'
 
     config.include('example_api.models')
-    config.include('nefertari.view')
+    # config.include('nefertari.view')
     config.include('nefertari.elasticsearch')
     config.include('nefertari.json_httpexceptions')
 
@@ -83,6 +83,7 @@ def main(global_config, **settings):
     )
 
     config.include('nefertari.engine')
+    config.include('nefertari_guards')
 
     from example_api.models import Profile
     from example_api.models import User

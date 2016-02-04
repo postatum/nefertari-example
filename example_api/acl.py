@@ -15,6 +15,7 @@ from example_api.models import (
     User,
     Story,
     )
+from nefertari_guards.acl import DatabaseACLMixin
 
 
 class UsersACL(CollectionACL):
@@ -39,7 +40,7 @@ class UsersACL(CollectionACL):
             )
 
 
-class StoriesACL(CollectionACL):
+class StoriesACL(DatabaseACLMixin, CollectionACL):
     item_model = Story
 
     __acl__ = (
